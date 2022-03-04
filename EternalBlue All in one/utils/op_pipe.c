@@ -12,7 +12,7 @@ enum _create_anonymous_pipe_ret_
 };
 ANONY_PIPE_DESC create_anony_pipe_with_io()
 {
-    //´´½¨¿ÉÒÔÓë±ê×¼I/O°ó¶¨µÄÄäÃû¹ÜµÀ
+    //åˆ›å»ºå¯ä»¥ä¸æ ‡å‡†I/Oç»‘å®šçš„åŒ¿åç®¡é“
     ANONY_PIPE_DESC pipeDesc;
     SECURITY_ATTRIBUTES sa;
     STARTUPINFO si;
@@ -20,10 +20,9 @@ ANONY_PIPE_DESC create_anony_pipe_with_io()
 
     memset(&pipeDesc, 0x00, sizeof(pipeDesc));
     memset(&sa, NULL, sizeof(SECURITY_ATTRIBUTES));
-    memset(&sa, NULL, sizeof(SECURITY_ATTRIBUTES));
     memset(&pi, NULL, sizeof(PROCESS_INFORMATION));
 
-    //´´½¨Á½¸öÄäÃû¹ÜµÀ
+    //åˆ›å»ºä¸¤ä¸ªåŒ¿åç®¡é“
     sa.nLength = sizeof(sa);
     sa.lpSecurityDescriptor = 0;
     sa.bInheritHandle = TRUE;
@@ -38,7 +37,7 @@ ANONY_PIPE_DESC create_anony_pipe_with_io()
         return pipeDesc;
     }
 
-    //¹ÜµÀÓëI/O°ó¶¨
+    //ç®¡é“ä¸I/Oç»‘å®š
     GetStartupInfo(&pipeDesc.si);
     pipeDesc.si.cb = sizeof(STARTUPINFO);
     pipeDesc.si.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
@@ -94,13 +93,13 @@ int recv_from_anony_pipe(ANONY_PIPE_DESC *pPipeDesc,
                          int block)
 {
     /*
-    ×èÈûº¯Êı£¬´Ó±ê×¼Êä³öÁ÷ÖĞ¶ÁÈ¡Êı¾İ
-    pPipeDesc: ¹ÜµÀÃèÊö×Ö
-    recv_handler: ½ÓÊÕºóµÄ»Øµ÷´¦Àíº¯Êı£¬·µ»ØÖµ 0: ²»ÍË³ö 1: ÍË³ö
-    hdrParam: ½ÓÊÕ»Øµ÷º¯Êı´«Èë²ÎÊı
-    need_exit: ¼àÊÓÊÇ·ñÔÚ×èÈûÇé¿öÏÂÓĞÍË³öÇëÇó£¬·µ»ØÖµ 0: ²»ÍË³ö 1: ÍË³ö
-    exParam: ÅĞ¶ÏÍË³öº¯ÊıµÄ²ÎÊı
-    block: 1£º×èÈûº¯Êı 0£º²»×èÈû
+    é˜»å¡å‡½æ•°ï¼Œä»æ ‡å‡†è¾“å‡ºæµä¸­è¯»å–æ•°æ®
+    pPipeDesc: ç®¡é“æè¿°å­—
+    recv_handler: æ¥æ”¶åçš„å›è°ƒå¤„ç†å‡½æ•°ï¼Œè¿”å›å€¼ 0: ä¸é€€å‡º 1: é€€å‡º
+    hdrParam: æ¥æ”¶å›è°ƒå‡½æ•°ä¼ å…¥å‚æ•°
+    need_exit: ç›‘è§†æ˜¯å¦åœ¨é˜»å¡æƒ…å†µä¸‹æœ‰é€€å‡ºè¯·æ±‚ï¼Œè¿”å›å€¼ 0: ä¸é€€å‡º 1: é€€å‡º
+    exParam: åˆ¤æ–­é€€å‡ºå‡½æ•°çš„å‚æ•°
+    block: 1ï¼šé˜»å¡å‡½æ•° 0ï¼šä¸é˜»å¡
     */
     char recvBuf[PIPE_RECV_BUFF_SIZE];
     int lBytesRead = 0;
@@ -114,7 +113,7 @@ int recv_from_anony_pipe(ANONY_PIPE_DESC *pPipeDesc,
 
     while (1)
     {
-        //¼ì²é×Ó½ø³ÌÊÇ·ñÍË³ö
+        //æ£€æŸ¥å­è¿›ç¨‹æ˜¯å¦é€€å‡º
         GetExitCodeProcess(pPipeDesc->pi.hProcess, &exitCode);
 
         do
@@ -163,7 +162,7 @@ int recv_from_anony_pipe(ANONY_PIPE_DESC *pPipeDesc,
             return RCV_PIPE_NORMAL;
         }
 
-        //×Ó½ø³ÌÒÑÍË³ö
+        //å­è¿›ç¨‹å·²é€€å‡º
         if(exitCode != STILL_ACTIVE)
         {
             return RCV_PIPE_NORMAL;
