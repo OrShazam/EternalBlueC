@@ -24,12 +24,12 @@ int fork_process(unsigned char *lpImage, char *pCmdLine, char *pDummyPath,
                  int *pPid, HANDLE *phProc)
 {
     /*
-    lpImage: ÄÚ´æÖĞEXEµØÖ·
-    pCmdLine: Æô¶¯µÄÃüÁîĞĞ
-    pDummyPath: Ö¸¶¨Ò»¸ö¿şÀÜ½ø³Ì
-    pStartInfo: ÉèÖÃ¿ÉÒÔ°ó¶¨I/O¾ä±ú
-    pProcInfo: ½ø³ÌÆô¶¯²ÎÊı
-    pPid: ·µ»Ø×Ó½ø³Ìpid
+    lpImage: å†…å­˜ä¸­EXEåœ°å€
+    pCmdLine: å¯åŠ¨çš„å‘½ä»¤è¡Œ
+    pDummyPath: æŒ‡å®šä¸€ä¸ªå‚€å„¡è¿›ç¨‹
+    pStartInfo: è®¾ç½®å¯ä»¥ç»‘å®šI/Oå¥æŸ„
+    pProcInfo: è¿›ç¨‹å¯åŠ¨å‚æ•°
+    pPid: è¿”å›å­è¿›ç¨‹pid
     */
     long int                lWritten;
     long int                lHeaderSize;
@@ -74,7 +74,7 @@ int fork_process(unsigned char *lpImage, char *pCmdLine, char *pDummyPath,
 
     if(pDummyPath == NULL)
     {
-        // Ê¹ÓÃ×ÔÉíµ±×÷¿şÀÜ½ø³Ì
+        // ä½¿ç”¨è‡ªèº«å½“ä½œå‚€å„¡è¿›ç¨‹
         if(GetModuleFileName(NULL, pProcessName, MAX_PATH) == 0)
         {
             free(pProcessName);
@@ -126,7 +126,7 @@ int fork_process(unsigned char *lpImage, char *pCmdLine, char *pDummyPath,
     // Grab NT Headers
     memcpy(&ntLocalNtHeader,
            (LPVOID)((long int)lpLocalFile + dsLocalDosHeader.e_lfanew),
-           sizeof(  dsLocalDosHeader));
+           sizeof( ntLocalNtHeader));
     if(ntLocalNtHeader.Signature != IMAGE_NT_SIGNATURE)
     {
         free(pProcessName);
